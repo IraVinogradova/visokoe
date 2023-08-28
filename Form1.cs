@@ -16,96 +16,46 @@ using static System.Net.Mime.MediaTypeNames;
 using System.IO;
 
 namespace visokoe
-{  
-    public partial class Panel : Form
+{
+
+    public partial class Panel : Form, IObserver
     {
-       
-        public async  void Panel1()
+        private MyServer _myServer;
+
+        public Panel(MyServer server)
         {
-            
+            _myServer = server;
+            _myServer.Add(this);
             InitializeComponent();
-            // Запускаем сервер на адресе 127.0.0.1 и порту 8888
-            IPAddress localAdr = IPAddress.Parse("127.0.0.1");
-            TcpListener server = new TcpListener(localAdr, 8888);
-
-            IPEndPoint ipLocalEndPoint = new IPEndPoint(localAdr, 8888);
-            try
+            if (server.getServerStatus())
             {
-                server.Start(); ser_cl.Visible = false;
+                ser_cl.Visible = false;
                 ser_on.Visible = true;
+            }
            
-            ;
-            // Запуск сервера
-            server.Start();
-            TcpClient client = await server.AcceptTcpClientAsync();
-            byte[] receivedBuffer = new byte[1024];
-            string msg = "";
-            // if (msg.Length !=0) { 
-            // msg.Remove(msg.Length - 1);
-            // }
-            NetworkStream stream = client.GetStream();
-            string end_bute = "\n";
-            byte[] end_buff = System.Text.Encoding.Default.GetBytes(end_bute);
-            if (client.Connected ) { serverison.Visible = true; };
-
-                // читаем данные
-                do
-                {
-
-                    // if (receivedBuffer.Take(3).Equals(end_buff))
-                    //{
-                    //    fromPLC.Clear(); break;
-                    // }
-
-                    //stream.Read(receivedBuffer, 0, receivedBuffer.Length);
-                    var bytesread = await stream.ReadAsync(receivedBuffer, 0, receivedBuffer.Length);
-                    msg = Encoding.UTF8.GetString(receivedBuffer, 0, bytesread);
-                    fromPLC.Text = msg;
-                    text_test.Text = msg;
-
-                }
-                while (client.Connected);
-
-            }
-            catch (Exception ex)
-            {
-                server.Stop();
-                MessageBox.Show(ex.Message);
-            }
         }
-        
- 
 
-        private async void PLCcon_Click(object sender, EventArgs e)
+        void IObserver.Update()
+      {
+            Invoke(new Action(() => text_test.Text = _myServer.Data));
+            Invoke(new Action(() => clientconected.Visible = _myServer.ClientStatus));
+            //Invoke(new Action(() => toPLC.Text = _myServer.Response));
+            //   MessageBox.Show("UPDATED!");
+        }
+
+        private void sendData_Click(object sender, EventArgs e)
         {
-               /* do
-                {
+            _myServer.SendMessage(toPLC.Text);
 
-                    // if (receivedBuffer.Take(3).Equals(end_buff))
-                    //{
-                    //    fromPLC.Clear(); break;
-                    // }
 
-                    //stream.Read(receivedBuffer, 0, receivedBuffer.Length);
-                    var bytesread = await stream.ReadAsync(receivedBuffer, 0, receivedBuffer.Length);
-                    msg = Encoding.UTF8.GetString(receivedBuffer, 0, bytesread);
-                    fromPLC.Text = msg;
-                    text_test.Text = msg;
 
-                }
-                while (client.Connected);
+        }
 
-            }
-                catch (Exception ex)
-                {
-                    server.Stop();
-                    MessageBox.Show(ex.Message);
-                }
-    //TcpClient client = await server.AcceptTcpClientAsync(); */
-}
-
-        private void label3_Click(object sender, EventArgs e)
+        private void text_test_Click(object sender, EventArgs e)
         {
+            // if (!_myServer.getServerStatus())
+            // { text_test.Text = _myServer.Data;  }
+            text_test.Text = _myServer.Data;
 
         }
     }

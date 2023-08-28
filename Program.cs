@@ -12,11 +12,14 @@ namespace visokoe
         /// Главная точка входа для приложения.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Panel());
+            var server = new MyServer();
+            var clientForm = new Panel(server);
+            Application.Run(clientForm);
+            
         }
     }
 }
