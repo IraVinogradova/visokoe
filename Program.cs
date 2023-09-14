@@ -16,8 +16,10 @@ namespace visokoe
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var server = new MyServer();
-            var clientForm = new Panel(server);
+            var settings = new MySetting();
+            var server = new MyServer(settings);
+            var settinForm = new SettingForm(server);
+            var clientForm = new Panel(server, settinForm);
             Application.Run(clientForm);
             
         }

@@ -22,12 +22,12 @@ namespace visokoe
     {
         private MyServer _myServer;
         private MySetting _mysetting;
+        private SettingForm _settingForm;
 
-        public Panel(MyServer server)
+        public Panel(MyServer server, SettingForm settingForm)
         {
-           int  servPort = _mysetting.SetPort;
-            _myServer.Port = servPort;
-
+        
+            _settingForm = settingForm;
             _myServer = server;
             _myServer.Add(this);
             InitializeComponent();
@@ -63,8 +63,7 @@ namespace visokoe
 
         private void setting_Click(object sender, EventArgs e)
         {
-            setting form_setting = new setting(_mysetting);
-            form_setting.Show();
+            _settingForm.Show();
         }
     }
             

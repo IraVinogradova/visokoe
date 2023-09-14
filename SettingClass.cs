@@ -6,28 +6,29 @@ namespace visokoe
 { 
 public class MySetting
 {
-    private int set_port;
+    private int _port;
 
 
-        public MySetting()
+        public MySetting(int port = 8888)
+
         {
-            InitialSetting(set_port);
+            _port = port;
+            
         }
 
 
-    public int SetPort
+    public int Port
     {
-        get => set_port;
+        get => _port;
 
         set
         {
-            set_port = value;
+            _port = value;
            
         }
     }
 
-        public void InitialSetting(int port)
-        { set_port = port; }
+  
 
 }
 }

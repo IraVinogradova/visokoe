@@ -20,12 +20,14 @@ namespace visokoe
         private string data;
         private string respons;
 
-        private int port;
+        private MySetting _setting;
 
-        public MyServer()
+        public MyServer(MySetting setting)
         {
+            _setting = setting; 
             observers = new List<IObserver>();
             StartServer(_server);
+            
         }
 
         public string Data
@@ -58,14 +60,7 @@ namespace visokoe
         
         }
 
-        public int Port { 
-            get => port;
-
-            set
-            {   port = value;
-                NotifyObserbers();
-            }
-        }
+     
 
         public bool getServerStatus()
         {
@@ -96,7 +91,7 @@ namespace visokoe
         private async void StartServer(TcpListener server)
         {
             while (true) {
-            if (port == 0)
+            if (_setting.Port == 0)
             {
                     break;
             }
@@ -105,7 +100,7 @@ namespace visokoe
                 
                 IPAddress localAdr = IPAddress.Parse("127.0.0.1");
                 
-                _server = new TcpListener(localAdr, port);
+                _server = new TcpListener(localAdr, _setting.Port);
                
                 _server.Start();
                 _serverStatus = true;
@@ -158,6 +153,16 @@ namespace visokoe
                 _serverStatus &= false;
             }
             }
+        }
+
+        public void SwitchPort(int port)
+        {
+            if (port == 0)
+                return;
+            _server.Stop();
+            _setting.Port = port;
+            StartServer(_server);
+
         }
 
         public void SendMessage(string Response)

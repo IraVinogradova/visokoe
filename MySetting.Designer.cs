@@ -1,6 +1,6 @@
 ﻿namespace visokoe
 {
-    partial class setting
+    partial class MySetting
     {
         /// <summary>
         /// Required designer variable.
