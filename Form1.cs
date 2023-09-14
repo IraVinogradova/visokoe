@@ -21,9 +21,13 @@ namespace visokoe
     public partial class Panel : Form, IObserver
     {
         private MyServer _myServer;
+        private MySetting _mysetting;
 
         public Panel(MyServer server)
         {
+           int  servPort = _mysetting.SetPort;
+            _myServer.Port = servPort;
+
             _myServer = server;
             _myServer.Add(this);
             InitializeComponent();
@@ -47,8 +51,6 @@ namespace visokoe
         {
             _myServer.SendMessage(toPLC.Text);
 
-
-
         }
 
         private void text_test_Click(object sender, EventArgs e)
@@ -57,6 +59,12 @@ namespace visokoe
             // { text_test.Text = _myServer.Data;  }
             text_test.Text = _myServer.Data;
 
+        }
+
+        private void setting_Click(object sender, EventArgs e)
+        {
+            setting form_setting = new setting(_mysetting);
+            form_setting.Show();
         }
     }
             

@@ -20,6 +20,8 @@ namespace visokoe
         private string data;
         private string respons;
 
+        private int port;
+
         public MyServer()
         {
             observers = new List<IObserver>();
@@ -56,6 +58,15 @@ namespace visokoe
         
         }
 
+        public int Port { 
+            get => port;
+
+            set
+            {   port = value;
+                NotifyObserbers();
+            }
+        }
+
         public bool getServerStatus()
         {
             return _serverStatus;
@@ -84,19 +95,26 @@ namespace visokoe
 
         private async void StartServer(TcpListener server)
         {
+            while (true) {
+            if (port == 0)
+            {
+                    break;
+            }
             try
             {
+                
                 IPAddress localAdr = IPAddress.Parse("127.0.0.1");
-
-                _server = new TcpListener(localAdr, 8888);
+                
+                _server = new TcpListener(localAdr, port);
+               
                 _server.Start();
                 _serverStatus = true;
-              
+
                 byte[] receivedBuffer = new byte[1024];
                 
                 data = "";
                 respons = "";
-             
+                
                 while (true)
                 {
                     using TcpClient client = await _server.AcceptTcpClientAsync();
@@ -138,6 +156,7 @@ namespace visokoe
             {
                 server.Stop();
                 _serverStatus &= false;
+            }
             }
         }
 

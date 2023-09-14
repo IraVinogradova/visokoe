@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Panel));
             this.clientconected = new System.Windows.Forms.Label();
-            this.PLCcon = new System.Windows.Forms.Button();
             this.toPLC = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -38,6 +38,7 @@
             this.text_test = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.sendData = new System.Windows.Forms.Button();
+            this.setting = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // clientconected
@@ -50,15 +51,6 @@
             this.clientconected.TabIndex = 4;
             this.clientconected.Text = "Клиент подключен";
             this.clientconected.Visible = false;
-            // 
-            // PLCcon
-            // 
-            this.PLCcon.Location = new System.Drawing.Point(34, 77);
-            this.PLCcon.Name = "PLCcon";
-            this.PLCcon.Size = new System.Drawing.Size(84, 42);
-            this.PLCcon.TabIndex = 6;
-            this.PLCcon.Text = "СТАРТ";
-            this.PLCcon.UseVisualStyleBackColor = true;
             // 
             // toPLC
             // 
@@ -130,6 +122,7 @@
             // 
             // sendData
             // 
+            this.sendData.Cursor = System.Windows.Forms.Cursors.Hand;
             this.sendData.Location = new System.Drawing.Point(871, 253);
             this.sendData.Name = "sendData";
             this.sendData.Size = new System.Drawing.Size(75, 23);
@@ -139,11 +132,26 @@
             this.sendData.UseVisualStyleBackColor = true;
             this.sendData.Click += new System.EventHandler(this.sendData_Click);
             // 
+            // setting
+            // 
+            this.setting.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("setting.BackgroundImage")));
+            this.setting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.setting.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.setting.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.setting.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.setting.Location = new System.Drawing.Point(51, 109);
+            this.setting.Name = "setting";
+            this.setting.Size = new System.Drawing.Size(105, 103);
+            this.setting.TabIndex = 17;
+            this.setting.UseVisualStyleBackColor = true;
+            this.setting.Click += new System.EventHandler(this.setting_Click);
+            // 
             // Panel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(970, 558);
+            this.Controls.Add(this.setting);
             this.Controls.Add(this.sendData);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.text_test);
@@ -152,7 +160,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.toPLC);
-            this.Controls.Add(this.PLCcon);
             this.Controls.Add(this.clientconected);
             this.Name = "Panel";
             this.Text = "Panel";
@@ -163,7 +170,6 @@
 
         #endregion
         private System.Windows.Forms.Label clientconected;
-        private System.Windows.Forms.Button PLCcon;
         private System.Windows.Forms.TextBox toPLC;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -172,6 +178,7 @@
         private System.Windows.Forms.Label text_test;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button sendData;
+        private System.Windows.Forms.Button setting;
     }
 }
 
